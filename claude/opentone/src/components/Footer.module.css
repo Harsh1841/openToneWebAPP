@@ -1,0 +1,26 @@
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer p { font-size: 13px; color: var(--muted); }
+
+.links { display: flex; gap: 28px; }
+
+.links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.links a:hover { color: var(--purple); }
+
+@media (max-width: 768px) {
+  .footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+}

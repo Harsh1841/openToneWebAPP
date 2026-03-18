@@ -1,0 +1,35 @@
+:root {
+  --purple: #6C47FF;
+  --purple-light: #EEE9FF;
+  --purple-mid: #A58BFF;
+  --dark: #111118;
+  --body: #3D3D4E;
+  --muted: #7A7A8C;
+  --border: #E8E8F0;
+  --bg: #F7F7FB;
+  --white: #FFFFFF;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+  50%       { box-shadow: 0 0 0 6px rgba(34,197,94,0.1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
