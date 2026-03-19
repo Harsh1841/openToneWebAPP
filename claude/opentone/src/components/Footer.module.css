@@ -1,26 +1,107 @@
 .footer {
-  border-top: 1px solid var(--border);
-  padding: 28px 48px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 64px 48px 40px;
+  transition: background 0.4s, border-color 0.3s;
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+/* Brand */
+.brand { max-width: 320px; }
+
+.brandLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.brandIcon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--purple), var(--fuchsia));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandIcon svg { width: 18px; height: 18px; }
+
+.brandLogo span {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-heading);
+  transition: color 0.3s;
+}
+
+.brandDesc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  transition: color 0.3s;
+}
+
+/* Link columns */
+.columns {
+  display: flex;
+  gap: 64px;
+}
+
+.column h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  transition: color 0.3s;
+}
+
+.column a {
+  display: block;
+  font-size: 14px;
+  color: var(--text-body);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.2s;
+}
+
+.column a:hover { color: var(--purple-mid); }
+
+/* Bottom */
+.bottom {
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
+  transition: border-color 0.3s;
 }
 
-.footer p { font-size: 13px; color: var(--muted); }
-
-.links { display: flex; gap: 28px; }
-
-.links a {
+.bottom p {
   font-size: 13px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
+  color: var(--text-muted);
+  transition: color 0.3s;
 }
-
-.links a:hover { color: var(--purple); }
 
 @media (max-width: 768px) {
-  .footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+  .footer { padding: 48px 24px 32px; }
+  .top { flex-direction: column; gap: 32px; }
+  .columns { gap: 40px; }
+  .bottom { flex-direction: column; align-items: flex-start; }
 }
