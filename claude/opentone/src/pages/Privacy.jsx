@@ -77,10 +77,10 @@ export default function Privacy() {
       <div className={styles.divider} />
 
       <section className={styles.section}>
-        <h2 className={styles.heading}>Contact Information</h2>
-        <p className={styles.p}>If you have any questions regarding this Privacy Policy, please contact:</p>
-        <p className={styles.p}><strong>Email:</strong> <a href="mailto:privacy@opentoneapp.com" className={styles.link}>privacy@opentoneapp.com</a></p>
-        <p className={styles.p}><strong>Support:</strong> <a href="mailto:support@opentoneapp.com" className={styles.link}>support@opentoneapp.com</a></p>
+        <h2 className={styles.heading}>10. Contact Us</h2>
+        <p className={styles.p}>If you have questions about this Privacy Policy, please contact us at:</p>
+        <p className={styles.p}><strong>Email:</strong> <a href="mailto:opentone.privacy@gmail.com" className={styles.link}>opentone.privacy@gmail.com</a></p>
+        <p className={styles.p}><strong>Support:</strong> <a href="mailto:opentone.support@gmail.com" className={styles.link}>opentone.support@gmail.com</a></p>
       </section>
     </main>
   )

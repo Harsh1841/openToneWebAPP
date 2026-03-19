@@ -28,17 +28,24 @@
   margin-bottom: 16px;
 }
 
-.brandIcon {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--purple), var(--fuchsia));
-  border-radius: 10px;
+.brandWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  background: white;
 }
 
-.brandIcon svg { width: 18px; height: 18px; }
+.brandIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.72);
+}
 
 .brandLogo span {
   font-size: 18px;

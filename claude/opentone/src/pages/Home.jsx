@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTheme } from '../context/ThemeContext'
 import styles from './Home.module.css'
 
 /* Intersection Observer hook for scroll reveals */
@@ -24,6 +25,7 @@ function useReveal() {
 
 export default function Home() {
   const pageRef = useReveal()
+  const { theme } = useTheme()
   const [openFaq, setOpenFaq] = useState(null)
 
   const faqs = [
@@ -102,39 +104,21 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={styles.heroRight}>
-            <div className={styles.card}>
-              <div className={styles.cardHeader}>
-                <span className={styles.cardLabel}>JAM Session — Live</span>
-                <div className={styles.liveDot}>Active</div>
-              </div>
-
-              {/* Waveform animation */}
-              <div className={styles.waveform}>
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className={styles.waveBar} />
-                ))}
-              </div>
-
-              <div className={styles.wpmRow}>
-                <span className={styles.wpmLabel}>Words Per Minute</span>
-                <span className={styles.wpmVal}>148</span>
-              </div>
-              <div className={styles.progressBar}><div className={styles.progressFill} /></div>
-              <div className={styles.metrics}>
-                <div className={styles.metric}>
-                  <div className={styles.metricVal}>2</div>
-                  <div className={styles.metricLbl}>Filler Words</div>
+          <div className={`${styles.heroRight} reveal`}>
+            {/* Animated Floating iPhone 17 Pro Dashboard */}
+            <div className={`${styles.phoneFrame} ${styles.heroPhone}`}>
+              <div className={styles.phonePlaceholder}>
+                <div className={styles.placeholderIcon}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
                 </div>
-                <div className={styles.metric}>
-                  <div className={styles.metricVal}>92%</div>
-                  <div className={styles.metricLbl}>Clarity</div>
-                </div>
-                <div className={styles.metric}>
-                  <div className={styles.metricVal}>8</div>
-                  <div className={styles.metricLbl}>Pauses</div>
-                </div>
+                <h4>App Dashboard</h4>
               </div>
+              <img 
+                src={theme === 'light' ? "/dashboard-light.png" : "/dashboard-dark.png"} 
+                alt="Main Application Dashboard" 
+                className={styles.phoneImage} 
+                style={{ opacity: 1 }} 
+              />
             </div>
           </div>
         </div>
@@ -226,6 +210,73 @@ export default function Home() {
                 <p>{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ==================== SHOWCASE ==================== */}
+      <div className={styles.showcaseBg}>
+        <div className={styles.section} style={{ paddingBottom: 0 }}>
+          <div className={`${styles.sectionHeader} reveal`}>
+            <div className={styles.sectionTag}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              Inside the App
+            </div>
+            <h2>Premium Experience. Flawless Design.</h2>
+            <p>Take a sneak peek inside OpenTone. A completely reimagined interface for learning how to speak with confidence.</p>
+          </div>
+        </div>
+
+        <div className={styles.showcaseRow}>
+          {/* Screenshot 1: Roleplay MVP */}
+          <div className={`${styles.phoneFrame} ${styles.stagger1} reveal`}>
+            <div className={styles.phonePlaceholder}>
+              <div className={styles.placeholderIcon}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h4>Roleplay Scenarios</h4>
+              <p>Add screenshot here (e.g. src="/roleplay-screen.png")</p>
+            </div>
+            <img 
+              src={theme === 'light' ? "/roleplay-light.png" : "/roleplay-dark.png"} 
+              alt="Roleplay Scenarios User Interface" 
+              className={styles.phoneImage} 
+              style={{ opacity: 1 }} 
+            />
+          </div>
+
+          {/* Screenshot 2: Progress & Analytics (Feedback - Centered) */}
+          <div className={`${styles.phoneFrame} ${styles.centerActive} reveal`} style={{ transitionDelay: '0.1s' }}>
+            <div className={styles.phonePlaceholder}>
+              <div className={styles.placeholderIcon}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <h4>Session Feedback</h4>
+              <p>Add screenshot here (e.g. src="/analytics-screen.png")</p>
+            </div>
+            <img 
+              src={theme === 'light' ? "/analytics-light.png" : "/analytics-dark.png"} 
+              alt="Analytics and Progress UI" 
+              className={styles.phoneImage} 
+              style={{ opacity: 1 }} 
+            />
+          </div>
+
+          {/* Screenshot 3: JAM Sessions (Right) */}
+          <div className={`${styles.phoneFrame} ${styles.stagger3} reveal`} style={{ transitionDelay: '0.2s' }}>
+            <div className={styles.phonePlaceholder}>
+              <div className={styles.placeholderIcon}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <h4>JAM Sessions</h4>
+              <p>Add screenshot here (e.g. src="/jam-screen.png")</p>
+            </div>
+            <img 
+              src={theme === 'light' ? "/jam-light.png" : "/jam-dark.png"} 
+              alt="JAM Session UI" 
+              className={styles.phoneImage} 
+              style={{ opacity: 1 }} 
+            />
           </div>
         </div>
       </div>

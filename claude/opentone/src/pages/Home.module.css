@@ -545,6 +545,134 @@
 }
 
 /* =============================================
+   SHOWCASE SECTION
+   ============================================= */
+.showcaseBg {
+  background: var(--bg-secondary);
+  transition: background 0.4s;
+  padding: 100px 0 140px;
+  overflow: hidden;
+}
+
+.showcaseRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin-top: 64px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  perspective: 1000px;
+}
+
+.phoneFrame {
+  width: 280px;
+  height: 600px;
+  background: var(--bg-primary);
+  /* Pure black inner bezel */
+  border: 10px solid #0A0A0A;
+  /* iPhone 17 Pro ultra-rounded corners */
+  border-radius: 52px;
+  overflow: hidden;
+  /* Outer titanium rim with shadow */
+  box-shadow: 
+    0 0 0 2px rgba(124, 58, 237, 0.3), /* Purple glow rim */
+    0 24px 64px rgba(0,0,0,0.15);
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
+}
+
+/* Subtle glass reflection to make it look like a physical screen */
+.phoneFrame::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* Angled light glare */
+  background: linear-gradient(115deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 100%);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.phonePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  position: relative;
+}
+
+.placeholderIcon {
+  width: 64px;
+  height: 64px;
+  background: var(--badge-bg);
+  color: var(--purple);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.placeholderIcon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.phonePlaceholder h4 {
+  font-size: 18px;
+  color: var(--text-heading);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.phonePlaceholder p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* User will replace src of this image later */
+.phoneImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 5;
+  opacity: 0; /* Hidden until user sets a working src */
+  transition: opacity 0.3s;
+}
+
+/* Staggered Grid Animations for 3 Phones */
+.phoneFrame.stagger1 { transform: translateY(30px) rotate(-3deg); z-index: 1; }
+.phoneFrame.centerActive { transform: scale(1.05) translateY(0); z-index: 5; border-color: #050505; box-shadow: 0 40px 100px var(--purple-glow), 0 0 0 2px var(--purple-mid); }
+.phoneFrame.stagger3 { transform: translateY(30px) rotate(3deg); z-index: 1; }
+
+.phoneFrame.stagger1:hover { transform: translateY(10px) rotate(-1deg); box-shadow: 0 32px 80px rgba(124, 58, 237, 0.15); }
+.phoneFrame.centerActive:hover { transform: scale(1.05) translateY(-15px); }
+.phoneFrame.stagger3:hover { transform: translateY(10px) rotate(1deg); box-shadow: 0 32px 80px rgba(124, 58, 237, 0.15); }
+
+/* Hero Phone Animation */
+.heroPhone {
+  transform: rotate(-3deg) translateY(0);
+  box-shadow: 0 40px 100px rgba(124, 58, 237, 0.25), 0 0 0 2px rgba(124, 58, 237, 0.5);
+  animation: floatHero 6s ease-in-out infinite;
+  z-index: 10;
+  border-color: #050505;
+}
+
+@keyframes floatHero {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(-3deg) translateY(-15px); }
+}
+
+/* =============================================
    AUDIENCE
    ============================================= */
 .audienceSection {
