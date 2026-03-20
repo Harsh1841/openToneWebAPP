@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import styles from './Home.module.css'
 
@@ -27,6 +27,51 @@ export default function Home() {
   const pageRef = useReveal()
   const { theme } = useTheme()
   const [openFaq, setOpenFaq] = useState(null)
+
+  // Titanium Steel Interactive Tilt — smooth rAF interpolation
+  const phoneRef = useRef(null)
+  const [isHovering, setIsHovering] = useState(false)
+  const targetRotation = useRef({ x: 5, y: -10 })
+  const currentRotation = useRef({ x: 5, y: -10 })
+  const rafId = useRef(null)
+
+  // Smooth animation loop: lerp current → target every frame
+  useEffect(() => {
+    const lerp = (a, b, t) => a + (b - a) * t
+    const animate = () => {
+      const smoothing = 0.08 // Lower = smoother/slower follow
+      currentRotation.current.x = lerp(currentRotation.current.x, targetRotation.current.x, smoothing)
+      currentRotation.current.y = lerp(currentRotation.current.y, targetRotation.current.y, smoothing)
+
+      if (phoneRef.current) {
+        phoneRef.current.style.transform = `rotateX(${currentRotation.current.x}deg) rotateY(${currentRotation.current.y}deg) translateZ(0px)`
+      }
+
+      rafId.current = requestAnimationFrame(animate)
+    }
+    rafId.current = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(rafId.current)
+  }, [])
+
+  const handleMouseMove = useCallback((e) => {
+    if (!phoneRef.current) return
+    const rect = phoneRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+
+    // Target rotation (-12 to 12 degrees) — animation loop will smoothly follow
+    targetRotation.current = {
+      x: ((y - centerY) / centerY) * -12,
+      y: ((x - centerX) / centerX) * 12
+    }
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false)
+    targetRotation.current = { x: 5, y: -10 } // Smoothly ease back to resting angle
+  }, [])
 
   const faqs = [
     {
@@ -105,24 +150,38 @@ export default function Home() {
           </div>
 
           <div className={`${styles.heroRight} reveal`}>
-            {/* Animated Floating iPhone 17 Pro Dashboard */}
-            <div className={`${styles.phoneFrame} ${styles.heroPhone}`}>
-              <div className={styles.phonePlaceholder}>
-                <div className={styles.placeholderIcon}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+            {/* Interactive Professional Steel Dashboard */}
+            <div 
+              className={styles.heroPhoneWrapper}
+              ref={phoneRef}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className={`${styles.phone3DWrapper} ${isHovering ? styles.activeHover : ''}`}>
+                <div className={styles.volumeUp}></div>
+                <div className={styles.volumeDown}></div>
+                <div className={styles.powerBtn}></div>
+                <div className={styles.phoneFrame}>
+                  <div className={styles.screenNotch}></div>
+                <div className={styles.phonePlaceholder}>
+                  <div className={styles.placeholderIcon}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                  </div>
+                  <h4>App Dashboard</h4>
                 </div>
-                <h4>App Dashboard</h4>
+                <img 
+                  src={theme === 'light' ? "/dashboard-light.png" : "/dashboard-dark.png"} 
+                  alt="Main Application Dashboard" 
+                  className={styles.phoneImage} 
+                  style={{ opacity: 1 }} 
+                />
               </div>
-              <img 
-                src={theme === 'light' ? "/dashboard-light.png" : "/dashboard-dark.png"} 
-                alt="Main Application Dashboard" 
-                className={styles.phoneImage} 
-                style={{ opacity: 1 }} 
-              />
             </div>
           </div>
         </div>
       </div>
+    </div>
 
       {/* ==================== FEATURES ==================== */}
       <div id="features" className={styles.featuresSection}>
@@ -229,54 +288,63 @@ export default function Home() {
 
         <div className={styles.showcaseRow}>
           {/* Screenshot 1: Roleplay MVP */}
-          <div className={`${styles.phoneFrame} ${styles.stagger1} reveal`}>
-            <div className={styles.phonePlaceholder}>
-              <div className={styles.placeholderIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <div className={`${styles.phone3DWrapper} ${styles.stagger1} reveal`}>
+            <div className={styles.phoneFrame}>
+              <div className={styles.screenNotch}></div>
+              <div className={styles.phonePlaceholder}>
+                <div className={styles.placeholderIcon}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <h4>Roleplay Scenarios</h4>
+                <p>Add screenshot here (e.g. src="/roleplay-screen.png")</p>
               </div>
-              <h4>Roleplay Scenarios</h4>
-              <p>Add screenshot here (e.g. src="/roleplay-screen.png")</p>
+              <img 
+                src={theme === 'light' ? "/roleplay-light.png" : "/roleplay-dark.png"} 
+                alt="Roleplay Scenarios User Interface" 
+                className={styles.phoneImage} 
+                style={{ opacity: 1 }} 
+              />
             </div>
-            <img 
-              src={theme === 'light' ? "/roleplay-light.png" : "/roleplay-dark.png"} 
-              alt="Roleplay Scenarios User Interface" 
-              className={styles.phoneImage} 
-              style={{ opacity: 1 }} 
-            />
           </div>
 
           {/* Screenshot 2: Progress & Analytics (Feedback - Centered) */}
-          <div className={`${styles.phoneFrame} ${styles.centerActive} reveal`} style={{ transitionDelay: '0.1s' }}>
-            <div className={styles.phonePlaceholder}>
-              <div className={styles.placeholderIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <div className={`${styles.phone3DWrapper} ${styles.centerActive} reveal`} style={{ transitionDelay: '0.1s' }}>
+            <div className={styles.phoneFrame}>
+              <div className={styles.screenNotch}></div>
+              <div className={styles.phonePlaceholder}>
+                <div className={styles.placeholderIcon}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <h4>Session Feedback</h4>
+                <p>Add screenshot here (e.g. src="/analytics-screen.png")</p>
               </div>
-              <h4>Session Feedback</h4>
-              <p>Add screenshot here (e.g. src="/analytics-screen.png")</p>
+              <img 
+                src={theme === 'light' ? "/analytics-light.png" : "/analytics-dark.png"} 
+                alt="Analytics and Progress UI" 
+                className={styles.phoneImage} 
+                style={{ opacity: 1 }} 
+              />
             </div>
-            <img 
-              src={theme === 'light' ? "/analytics-light.png" : "/analytics-dark.png"} 
-              alt="Analytics and Progress UI" 
-              className={styles.phoneImage} 
-              style={{ opacity: 1 }} 
-            />
           </div>
 
           {/* Screenshot 3: JAM Sessions (Right) */}
-          <div className={`${styles.phoneFrame} ${styles.stagger3} reveal`} style={{ transitionDelay: '0.2s' }}>
-            <div className={styles.phonePlaceholder}>
-              <div className={styles.placeholderIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div className={`${styles.phone3DWrapper} ${styles.stagger3} reveal`} style={{ transitionDelay: '0.2s' }}>
+            <div className={styles.phoneFrame}>
+              <div className={styles.screenNotch}></div>
+              <div className={styles.phonePlaceholder}>
+                <div className={styles.placeholderIcon}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h4>JAM Sessions</h4>
+                <p>Add screenshot here (e.g. src="/jam-screen.png")</p>
               </div>
-              <h4>JAM Sessions</h4>
-              <p>Add screenshot here (e.g. src="/jam-screen.png")</p>
+              <img 
+                src={theme === 'light' ? "/jam-light.png" : "/jam-dark.png"} 
+                alt="JAM Session UI" 
+                className={styles.phoneImage} 
+                style={{ opacity: 1 }} 
+              />
             </div>
-            <img 
-              src={theme === 'light' ? "/jam-light.png" : "/jam-dark.png"} 
-              alt="JAM Session UI" 
-              className={styles.phoneImage} 
-              style={{ opacity: 1 }} 
-            />
           </div>
         </div>
       </div>

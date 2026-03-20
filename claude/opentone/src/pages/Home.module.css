@@ -182,6 +182,10 @@
 /* Hero card */
 .heroRight {
   animation: slideInRight 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
 }
 
 .card {
@@ -566,34 +570,60 @@
   perspective: 1000px;
 }
 
-.phoneFrame {
+/* Sleek Professional Steel Rim */
+.phone3DWrapper {
   width: 280px;
   height: 600px;
-  background: var(--bg-primary);
-  /* Pure black inner bezel */
-  border: 10px solid #0A0A0A;
-  /* iPhone 17 Pro ultra-rounded corners */
-  border-radius: 52px;
-  overflow: hidden;
-  /* Outer titanium rim with shadow */
-  box-shadow: 
-    0 0 0 2px rgba(124, 58, 237, 0.3), /* Purple glow rim */
-    0 24px 64px rgba(0,0,0,0.15);
+  border-radius: 54px;
   position: relative;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
+  transform-style: preserve-3d;
+  background: linear-gradient(135deg, #f5f5f7 0%, #d1d1d6 25%, #aeb0b5 50%, #8e8e93 75%, #48484a 100%);
+  padding: 3px; 
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    -10px 20px 40px rgba(0, 0, 0, 0.5); 
+  transition: box-shadow 0.4s ease-out;
 }
 
-/* Subtle glass reflection to make it look like a physical screen */
+.phone3DWrapper.activeHover {
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    -30px 50px 80px rgba(0, 0, 0, 0.7); 
+}
+
+/* Staggered Grid Animations for Showcase */
+.phone3DWrapper.stagger1 { transform: translateY(30px) rotate(-3deg); z-index: 1; }
+.phone3DWrapper.centerActive { transform: scale(1.05) translateY(0); z-index: 5; }
+.phone3DWrapper.stagger3 { transform: translateY(30px) rotate(3deg); z-index: 1; }
+
+.phone3DWrapper.stagger1:hover { transform: translateY(10px) rotate(-1deg); box-shadow: 0 32px 80px rgba(124, 58, 237, 0.2); }
+.phone3DWrapper.centerActive:hover { transform: scale(1.05) translateY(-15px); }
+.phone3DWrapper.stagger3:hover { transform: translateY(10px) rotate(1deg); box-shadow: 0 32px 80px rgba(124, 58, 237, 0.2); }
+
+.phoneFrame {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary);
+  border: 6px solid #000000;
+  border-radius: 51px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+  position: relative;
+  z-index: 5;
+}
+
+/* Subtle glass reflection */
 .phoneFrame::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  /* Angled light glare */
-  background: linear-gradient(115deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 100%);
-  z-index: 20;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 100%);
   pointer-events: none;
 }
 
+/* Screen Placeholder and Image Containment */
 .phonePlaceholder {
   width: 100%;
   height: 100%;
@@ -636,7 +666,6 @@
   color: var(--text-muted);
 }
 
-/* User will replace src of this image later */
 .phoneImage {
   position: absolute;
   top: 0;
@@ -645,31 +674,60 @@
   height: 100%;
   object-fit: cover;
   z-index: 5;
-  opacity: 0; /* Hidden until user sets a working src */
   transition: opacity 0.3s;
 }
 
-/* Staggered Grid Animations for 3 Phones */
-.phoneFrame.stagger1 { transform: translateY(30px) rotate(-3deg); z-index: 1; }
-.phoneFrame.centerActive { transform: scale(1.05) translateY(0); z-index: 5; border-color: #050505; box-shadow: 0 40px 100px var(--purple-glow), 0 0 0 2px var(--purple-mid); }
-.phoneFrame.stagger3 { transform: translateY(30px) rotate(3deg); z-index: 1; }
-
-.phoneFrame.stagger1:hover { transform: translateY(10px) rotate(-1deg); box-shadow: 0 32px 80px rgba(124, 58, 237, 0.15); }
-.phoneFrame.centerActive:hover { transform: scale(1.05) translateY(-15px); }
-.phoneFrame.stagger3:hover { transform: translateY(10px) rotate(1deg); box-shadow: 0 32px 80px rgba(124, 58, 237, 0.15); }
-
-/* Hero Phone Animation */
-.heroPhone {
-  transform: rotate(-3deg) translateY(0);
-  box-shadow: 0 40px 100px rgba(124, 58, 237, 0.25), 0 0 0 2px rgba(124, 58, 237, 0.5);
-  animation: floatHero 6s ease-in-out infinite;
+/* Dynamic Interactive Transform Wrapper */
+.heroPhoneWrapper {
+  transform-style: preserve-3d;
+  will-change: transform;
   z-index: 10;
-  border-color: #050505;
 }
 
-@keyframes floatHero {
-  0%, 100% { transform: rotate(-3deg) translateY(0); }
-  50% { transform: rotate(-3deg) translateY(-15px); }
+.heroPhoneWrapper::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle at center, rgba(124, 58, 237, 0.3) 0%, transparent 60%);
+  transform: translateZ(-30px);
+  filter: blur(20px);
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: opacity 0.4s;
+}
+
+/* Steel Hardware Buttons */
+.volumeUp, .volumeDown, .powerBtn {
+  position: absolute;
+  background: linear-gradient(to bottom, #d1d1d6, #8e8e93, #636366);
+  z-index: -1;
+  box-shadow: inset 1px 0 2px rgba(255,255,255,0.5), inset -1px 0 2px rgba(0,0,0,0.5);
+}
+
+.volumeUp {
+  top: 130px; left: -3px;
+  width: 6px; height: 50px;
+  border-radius: 4px 0 0 4px;
+}
+
+.volumeDown {
+  top: 200px; left: -3px;
+  width: 6px; height: 50px;
+  border-radius: 4px 0 0 4px;
+}
+
+.powerBtn {
+  top: 160px; right: -3px; 
+  width: 6px; height: 60px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(to bottom, #d1d1d6, #636366);
+}
+
+/* iPhone 17 Pro Dynamic Island */
+.screenNotch {
+  display: none; /* Hidden because screenshots already contain their own Dynamic Island and status bar */
 }
 
 /* =============================================
