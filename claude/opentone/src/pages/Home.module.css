@@ -129,6 +129,7 @@
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 24px var(--purple-glow);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .primaryBtn:hover {
@@ -940,6 +941,7 @@
   box-shadow: 0 4px 24px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .launchBadge:hover {
